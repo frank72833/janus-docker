@@ -1,21 +1,16 @@
-version: '2'
-
-networks:
-  front-tier:
-    driver: bridge
-  back-tier:
-    driver: bridge
+version: '3'
 
 services:
   janus-gateway:
     image: docker-janus:latest 
     container_name: janus-gateway
-    volumes:
-    #   - ./janus/etc/janus/:/opt/janus/etc/janus/
-      - ./janus/janus.log:/var/log/janus.log
     ports:
+      # http
       - 8088:8088
+      # https
+      - 8089:8089
+      # ws
       - 8188:8188
-    networks:
-      - back-tier
-      - front-tier
+      # wss
+      - 8989:8989
+    restart: unless-stopped
